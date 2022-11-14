@@ -27,6 +27,21 @@ public static class MessageOutput
         Console.Write(secondVariant);
         Console.ResetColor();
     }
+    
+    public static void PrintChosenMethod(string firstVariant, string secondVariant, string thirdVariant, bool? firstIsChosen = true)
+    {
+        if (firstIsChosen is not null && firstIsChosen.Value) Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.Write("\r"+firstVariant);
+        Console.ResetColor();
+        Console.Write(" | ");
+        if (firstIsChosen is null) Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.Write(secondVariant);
+        Console.ResetColor();
+        Console.Write(" | ");
+        if (firstIsChosen is not null && !firstIsChosen.Value) Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.Write(thirdVariant);
+        Console.ResetColor();
+    }
 
     public static void InputErrorMessageOutput(byte error)
     {

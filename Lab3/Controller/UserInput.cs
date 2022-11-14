@@ -79,22 +79,24 @@ public static class UserInput
     private static Method GetMethod()
     {
         Console.WriteLine("Choose the method, please.");
-        bool firstIsChosen = true;
+        bool? firstIsChosen = true;
         while (true)
         {
-            MessageOutput.PrintChosenMethod("Mini-max", "Alpha-beta pruning", firstIsChosen);
+            MessageOutput.PrintChosenMethod("Nega-max", "Nega-Alpha-beta pruning", "Nega-scout", firstIsChosen);
             var key = Console.ReadKey();
             switch (key.Key)
             {
                 case ConsoleKey.Enter:
                     Console.WriteLine();
                     Console.Clear();
-                    return firstIsChosen ? Method.NegaMax : Method.AlphaBeta;
+                    return firstIsChosen is null ? Method.AlphaBeta : firstIsChosen.Value? Method.NegaMax : Method.NegaScout;
                 case ConsoleKey.RightArrow: case ConsoleKey.DownArrow:
-                    firstIsChosen = false;
+                    if (firstIsChosen is not null && firstIsChosen.Value) firstIsChosen = null;
+                    else firstIsChosen = false;
                     break;
                 case ConsoleKey.LeftArrow: case ConsoleKey.UpArrow:
-                    firstIsChosen = true;
+                    if (firstIsChosen is not null && !firstIsChosen.Value) firstIsChosen = null;
+                    else firstIsChosen = true;
                     break;
             }
         }
