@@ -26,7 +26,7 @@ public abstract partial class DecisionTree
         i = j = -1;
         foreach (var node in Root.PossibleNextMoves)
         {
-            if (node.Value == bestVal && (!found || node.IsTerminal))
+            if (node.Value == -bestVal && (!found || node.IsTerminal))
             {
                 i = node.I;
                 j = node.J;

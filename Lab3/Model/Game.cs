@@ -21,9 +21,9 @@ public class Game
             enemies[i] = TryPlaceEnemy(Field, start);
 
         Position startPosition = new Position(this, start, enemies);
-        DecisionTree = method == Method.Minimax ?
+        DecisionTree = method == Method.NegaMax ?
             new NegaMaxAlgo(startPosition, enemies[0].Item1, enemies[0].Item2, 6, this) :
-            new AlphaBetaAlgo(startPosition, enemies[0].Item1, enemies[0].Item2, 6, this);
+            new NegaAlphaBetaAlgo(startPosition, enemies[0].Item1, enemies[0].Item2, 6, this);
     }
 
     public Position GetNewPosition(short newI, short newJ, Position position, bool myMove = false, short enemyIndex = 0)

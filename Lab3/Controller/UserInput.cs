@@ -89,7 +89,7 @@ public static class UserInput
                 case ConsoleKey.Enter:
                     Console.WriteLine();
                     Console.Clear();
-                    return firstIsChosen ? Method.Minimax : Method.AlphaBeta;
+                    return firstIsChosen ? Method.NegaMax : Method.AlphaBeta;
                 case ConsoleKey.RightArrow: case ConsoleKey.DownArrow:
                     firstIsChosen = false;
                     break;

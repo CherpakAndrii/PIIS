@@ -2,6 +2,7 @@
 
 public enum Method
 {
-    Minimax,
-    AlphaBeta
+    NegaMax,
+    AlphaBeta,
+    NegaScout
 }
