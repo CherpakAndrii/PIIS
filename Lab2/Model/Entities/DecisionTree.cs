@@ -6,11 +6,9 @@ public abstract partial class DecisionTree
 {
     public Node Root;
     private static int _depthLvlCtr;
-    internal Game game;
 
     public DecisionTree(Position startState, short firstI, short firstJ, int currentMaxDepth, Game gm)
     {
-        game = gm;
         if (startState.DistancesToEnemies.Length > 1)
             throw new NotImplementedException("This application can't work with more than 1 enemy for now :(");
         _depthLvlCtr = currentMaxDepth;
