@@ -5,7 +5,7 @@ public class NegaMaxAlgo : DecisionTree
     public NegaMaxAlgo(Position ss, short i, short j, int md, Game g) : base(ss, i, j, md, g) {}
     protected override int GetNextMoveNodeValue(Node node, int depth)
     {
-        return NegaMax(node, depth, 1);
+        return -NegaMax(node, depth, 1);
     }
 
     private int NegaMax(Node node, int depth, int color)

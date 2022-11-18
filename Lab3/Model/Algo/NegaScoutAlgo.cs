@@ -6,31 +6,43 @@ public class NegaScoutAlgo : DecisionTree
 
     protected override int GetNextMoveNodeValue(Node node, int depth)
     {
-        return NegaScout(node, depth, Int32.MinValue/2, Int32.MaxValue/2, 1);
+        Node move = NegaScout(node, depth, Int32.MinValue/2-1, Int32.MaxValue/2+1, 1).Item2;
+        return move.Value;
     }
 
-    private int NegaScout(Node node, int depth, int alpha, int beta, int color)
+    private (int, Node) NegaScout(Node node, int depth, int alpha, int beta, int color)
     {
         int b, t;
         if (depth == 0 || node.IsTerminal)
         {
             node.Value = node.CurrentState.Value() * color;
-            return node.Value;
+            return (node.Value, node);
         }
-        b = beta;
+
+        Node move = node;
         bool firstChildProcessed = false;
         foreach (Node child in node.PossibleNextMoves)
         {
-            t = -NegaScout(child, depth-1, -b, -alpha, -color);
-            if (t > alpha && t < beta && firstChildProcessed)
-                t = -NegaScout(child, depth-1, -beta, -alpha, -color);
-            alpha = Math.Max(alpha, t);
-            if (alpha >= beta)
-                return alpha;
-            b = alpha + 1;
+            if (!firstChildProcessed) t = -NegaScout(child, depth - 1, -beta, -alpha, -color).Item1;
+            else
+            {
+                t = -NegaScout(child, depth - 1, -alpha - 1, -alpha, -color).Item1;
+                if (t > alpha && t < beta && depth > 1)
+                {
+                    b = -NegaScout(child, depth - 1, -beta , -t, -color).Item1;
+                    t = Math.Max(t, b);
+                }
+            }
+            if (alpha < t)
+            {
+                alpha = t;
+                move = child;
+            }
+            if (alpha >= beta) break;
             firstChildProcessed = true;
         }
 
-        return alpha;
+        node.Value = move.Value;
+        return (alpha, move);
     }
 }

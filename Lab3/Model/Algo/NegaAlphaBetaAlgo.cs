@@ -5,7 +5,7 @@ public class NegaAlphaBetaAlgo : DecisionTree
     public NegaAlphaBetaAlgo(Position ss, short i, short j, int md, Game g) : base(ss, i, j, md, g) {}
     protected override int GetNextMoveNodeValue(Node node, int depth)
     {
-        return AlphaBeta(node, depth, Int32.MinValue/2, Int32.MaxValue/2, 1);
+        return -AlphaBeta(node, depth, Int32.MinValue/2, Int32.MaxValue/2, 1);
     }
 
     private int AlphaBeta(Node node, int depth, int α, int β, int color)
