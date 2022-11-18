@@ -1,6 +1,6 @@
 ﻿namespace Lab3.View;
 
-public static class MessageOutput
+public class MessageOutput
 {
     private static readonly string[] InputErrorMessages =
     {
@@ -16,34 +16,21 @@ public static class MessageOutput
         "You can't place more than 4 or less than 0 enemies!",
         "Seems like there is no possible moves!"
     };
-    
-    public static void PrintChosenMethod(string firstVariant, string secondVariant, bool firstIsChosen = true)
+
+    public void PrintChosenOption(string[] variants, int chosen = 0)
     {
-        if (firstIsChosen) Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write("\r"+firstVariant);
-        Console.ResetColor();
-        Console.Write(" | ");
-        if (!firstIsChosen) Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write(secondVariant);
-        Console.ResetColor();
-    }
-    
-    public static void PrintChosenMethod(string firstVariant, string secondVariant, string thirdVariant, bool? firstIsChosen = true)
-    {
-        if (firstIsChosen is not null && firstIsChosen.Value) Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write("\r"+firstVariant);
-        Console.ResetColor();
-        Console.Write(" | ");
-        if (firstIsChosen is null) Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write(secondVariant);
-        Console.ResetColor();
-        Console.Write(" | ");
-        if (firstIsChosen is not null && !firstIsChosen.Value) Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write(thirdVariant);
-        Console.ResetColor();
+        if (variants.Length < 1) throw new ArgumentException("Can`t choose between no options");
+        Console.Write('\r');
+        for (int i = 0; i < variants.Length; i++)
+        {
+            Console.Write(" | ");
+            if (chosen == i) Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.Write(variants[i]);
+            Console.ResetColor();
+        }
     }
 
-    public static void InputErrorMessageOutput(byte error)
+    public void InputErrorMessageOutput(byte error)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine(error is > 0 and < 11 ? InputErrorMessages[error] : InputErrorMessages[0]);

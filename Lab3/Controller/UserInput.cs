@@ -4,21 +4,21 @@ using Lab3.View;
 
 namespace Lab3.Controller;
 
-public static class UserInput
+public class UserInput
 {
-    public static void GetInputs(out ValidatedFileModel filename, out Method method, out AdjacencyType adjacency)
+    public void GetInputs(out ValidatedFileModel filename, out Method method, out AdjacencyType adjacency)
     {
         filename = new ValidatedFileModel("data.csv");//GetFileName();
         method = GetMethod();
         adjacency = AdjacencyType.EdgesOnly;//GetAdjacencyType();
     }
 
-    public static void GetEntries(out (short, short) start, out (short, short) finish, FieldModel field)
+    public void GetEntries(out (short, short) start, out (short, short) finish, FieldModel field)
     {
         start = (7, 11);//GetEntryPoint(field, true);
         finish = (1, 13);//GetEntryPoint(field, false);
     }
-    /*private static ValidatedFileModel GetFileName()
+    /*private ValidatedFileModel GetFileName()
     {
         while (true)
         {
@@ -26,7 +26,7 @@ public static class UserInput
             string? filename = Console.ReadLine();
             
             if (filename == "exit") Environment.Exit(1);
-            byte validationResult = FileValidator.ValidateFile(filename);
+            byte validationResult = new FileValidator().ValidateFile(filename);
             if (validationResult == 0)
             {
                 Console.Clear();
@@ -36,7 +36,7 @@ public static class UserInput
         }
     }
     
-    public static int GetEnemyNumber()
+    public int GetEnemyNumber()
     {
         while (true)
         {
@@ -53,81 +53,60 @@ public static class UserInput
         }
     }
     
-    public static EnemyBehaviorPattern GetEnemyBehavior()
+    public EnemyBehaviorPattern GetEnemyBehavior()
     {
         Console.WriteLine("Choose the behavioral pattern of enemies, please.");
-        bool firstIsChosen = true;
+        string[] variants = { "Random moves", "Searching path to player" };
+        return (EnemyBehaviorPattern)SelectBetweenOptions(variants);
+    }*/
+    
+    private int SelectBetweenOptions(string[] variants)
+    {
+        int chosen = 0;
+        MessageOutput messageOutput = new MessageOutput();
+        messageOutput.PrintChosenOption(variants, chosen);
         while (true)
         {
-            MessageOutput.PrintChosenMethod("Random moves", "Searching path to player", firstIsChosen);
             var key = Console.ReadKey();
             switch (key.Key)
             {
                 case ConsoleKey.Enter:
                     Console.WriteLine();
                     Console.Clear();
-                    return firstIsChosen ? EnemyBehaviorPattern.RandomMoves : EnemyBehaviorPattern.PathToPlayer;
+                    return chosen;
                 case ConsoleKey.RightArrow: case ConsoleKey.DownArrow:
-                    firstIsChosen = false;
+                    if (chosen < variants.Length - 1)
+                    {
+                        chosen++;
+                        messageOutput.PrintChosenOption(variants, chosen);
+                    }
                     break;
                 case ConsoleKey.LeftArrow: case ConsoleKey.UpArrow:
-                    firstIsChosen = true;
+                    if (chosen > 0)
+                    {
+                        chosen--;
+                        messageOutput.PrintChosenOption(variants, chosen);
+                    }
                     break;
             }
         }
-    }*/
+    }
 
-    private static Method GetMethod()
+    private Method GetMethod()
     {
         Console.WriteLine("Choose the method, please.");
-        bool? firstIsChosen = true;
-        while (true)
-        {
-            MessageOutput.PrintChosenMethod("Nega-max", "Nega-Alpha-beta pruning", "Nega-scout", firstIsChosen);
-            var key = Console.ReadKey();
-            switch (key.Key)
-            {
-                case ConsoleKey.Enter:
-                    Console.WriteLine();
-                    Console.Clear();
-                    return firstIsChosen is null ? Method.AlphaBeta : firstIsChosen.Value? Method.NegaMax : Method.NegaScout;
-                case ConsoleKey.RightArrow: case ConsoleKey.DownArrow:
-                    if (firstIsChosen is not null && firstIsChosen.Value) firstIsChosen = null;
-                    else firstIsChosen = false;
-                    break;
-                case ConsoleKey.LeftArrow: case ConsoleKey.UpArrow:
-                    if (firstIsChosen is not null && !firstIsChosen.Value) firstIsChosen = null;
-                    else firstIsChosen = true;
-                    break;
-            }
-        }
-    }
-    
-    /*private static AdjacencyType GetAdjacencyType()
-    {
-        Console.WriteLine("Would you like to allow the adjacency on the corners, or only on the edge?");
-        bool firstIsChosen = true;
-        while (true)
-        {
-            MessageOutput.PrintChosenMethod("Only edges", "Edges and corners", firstIsChosen);
-            var key = Console.ReadKey();
-            switch (key.Key)
-            {
-                case ConsoleKey.Enter:
-                    Console.WriteLine();
-                    Console.Clear();
-                    return firstIsChosen ? AdjacencyType.EdgesOnly : AdjacencyType.EdgesAndCorners;
-                case ConsoleKey.RightArrow: case ConsoleKey.DownArrow:
-                    firstIsChosen = false;
-                    break;
-                case ConsoleKey.LeftArrow: case ConsoleKey.UpArrow:
-                    firstIsChosen = true;
-                    break;
-            }
-        }
+        string[] variants = { "Nega-max", "Nega-Alpha-beta pruning", "Nega-scout" };
+        return (Method)SelectBetweenOptions(variants);
     }
 
-    private static (short, short) GetEntryPoint(FieldModel field, bool isStart)
+    /*private AdjacencyType GetAdjacencyType()
+    {
+        Console.WriteLine("Would you like to allow the adjacency on the corners, or only on the edge?");
+        string[] variants = { "Only edges", "Edges and corners" };
+        return (AdjacencyType)SelectBetweenOptions(variants);
+    }
+
+    private (short, short) GetEntryPoint(FieldModel field, bool isStart)
     {
         while (true)
         {
