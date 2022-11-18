@@ -1,4 +1,8 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Algo;
+using Lab3.Model.Entities;
+using Lab3.Model.EnumsAndModels;
+
+namespace Lab3.Model;
 
 public class Game
 {
@@ -18,7 +22,7 @@ public class Game
         PathSearchAlgo = new AStar(new FieldModel(Field), adjacency);
         (short, short)[] enemies = new (short, short)[enemyNumber];
         for (int i = 0; i < enemyNumber; i++)
-            enemies[i] = TryPlaceEnemy(Field, start);
+            enemies[i] = (1, 19);//TryPlaceEnemy(Field, start);
 
         Position startPosition = new Position(this, start, enemies);
         DecisionTree = method == Method.NegaMax ?
@@ -57,9 +61,9 @@ public class Game
         if (moveCtr % 2 == 0)
             return DecisionTree.ChooseNextMove(out i, out j, 5);
         
-        FieldModel PathToPlayer = new FieldModel(Field);
-        PathToPlayer.SetEntryPoints(DecisionTree.Root.CurrentState.EnemiesCoordinates[0], DecisionTree.Root.CurrentState.PlayerCoordinates);
-        RouteModel? route = PathSearchAlgo.FindPath(PathToPlayer);
+        FieldModel pathToPlayer = new FieldModel(Field);
+        pathToPlayer.SetEntryPoints(DecisionTree.Root.CurrentState.EnemiesCoordinates[0], DecisionTree.Root.CurrentState.PlayerCoordinates);
+        RouteModel? route = PathSearchAlgo.FindPath(pathToPlayer);
         if (route is null)
         {
             i = j = -1;

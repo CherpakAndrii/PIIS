@@ -1,4 +1,7 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+using Lab3.Model.EnumsAndModels;
+
+namespace Lab3.Model.Algo;
 
 public class AStar : PathSearcher
 {
@@ -28,7 +31,7 @@ public class AStar : PathSearcher
                 if (newAdjacentMinDistance < adjacent[i].MinDistanceFromStart)
                 {
                     adjacent[i].MinDistanceFromStart = newAdjacentMinDistance;
-                    adjacent[i].PreviousCellYXCoordinates = (current.Y, current.X);
+                    adjacent[i].PreviousCellYxCoordinates = (current.Y, current.X);
                     queue.Enqueue(adjacent[i], GetPriority(current));
                 }
             }

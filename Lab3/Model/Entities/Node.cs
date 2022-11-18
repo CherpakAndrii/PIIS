@@ -1,7 +1,6 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.EnumsAndModels;
 
-using System; 
-using System.Collections.Generic;
+namespace Lab3.Model.Entities;
 
 partial class DecisionTree
 {
@@ -44,7 +43,7 @@ partial class DecisionTree
                         n.InitializeNewNodes();
                 else PossibleNextMoves = GetPossibleMoves();
             }
-            else Value = (int)CurrentState.Value();
+            else Value = CurrentState.Value();
         }
 
         private List<Node> GetPossibleMoves()

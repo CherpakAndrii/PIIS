@@ -1,4 +1,6 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+
+namespace Lab3.Model.Algo;
 
 public class NegaScoutAlgo : DecisionTree
 {
@@ -21,7 +23,7 @@ public class NegaScoutAlgo : DecisionTree
 
         Node move = node;
         bool firstChildProcessed = false;
-        foreach (Node child in node.PossibleNextMoves)
+        foreach (Node child in node.PossibleNextMoves!)
         {
             if (!firstChildProcessed) t = -NegaScout(child, depth - 1, -beta, -alpha, -color).Item1;
             else

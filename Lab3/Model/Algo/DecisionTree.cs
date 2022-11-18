@@ -1,14 +1,12 @@
-﻿namespace Lab3.Model;
+﻿namespace Lab3.Model.Entities;
 
 public abstract partial class DecisionTree
 {
     public Node Root;
     private static int _depthLvlCtr;
-    internal Game game;
 
-    public DecisionTree(Position startState, short firstI, short firstJ, int currentMaxDepth, Game gm)
+    protected DecisionTree(Position startState, short firstI, short firstJ, int currentMaxDepth, Game gm)
     {
-        game = gm;
         if (startState.DistancesToEnemies.Length > 1)
             throw new NotImplementedException("This application can't work with more than 1 enemy for now :(");
         _depthLvlCtr = currentMaxDepth;
@@ -22,6 +20,7 @@ public abstract partial class DecisionTree
         int bestVal = GetNextMoveNodeValue(Root, depth);
         bool found = false;
         i = j = -1;
+        if (Root.PossibleNextMoves is null) return false;
         foreach (var node in Root.PossibleNextMoves)
         {
             if (node.Value == bestVal && (!found || node.IsTerminal))
@@ -38,7 +37,7 @@ public abstract partial class DecisionTree
 
     public void MoveIsDone(int i, int j)
     {
-        foreach (Node n in Root.PossibleNextMoves)
+        foreach (Node n in Root.PossibleNextMoves!)
         {
             if (n.I == i && n.J == j)
             {

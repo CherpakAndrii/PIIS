@@ -1,8 +1,9 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.EnumsAndModels;
+
+namespace Lab3.Model.Entities;
 
 public struct Position
-{
-    private Game _game;
+{ 
     public (short, short) PlayerCoordinates { get; }
     public (short, short)[] EnemiesCoordinates { get; }
     public readonly int[] DistancesToEnemies;
@@ -13,24 +14,23 @@ public struct Position
     {
         PlayerCoordinates = playerPosition;
         EnemiesCoordinates = enemiesCoordinates;
-        _game = game;
-        DistanceToFinish = __searchPath(_game, PlayerCoordinates, _game.Finish);
+        DistanceToFinish = __searchPath(game, PlayerCoordinates, game.Finish);
         if (DistanceToFinish == -1) throw new ApplicationException("There is no path to target!");
         DistancesToEnemies = new int[enemiesCoordinates.Length];
         for (int i = 0; i < EnemiesCoordinates.Length; i++)
         {
-            DistancesToEnemies[i] = __searchPath(_game, EnemiesCoordinates[i], PlayerCoordinates);
+            DistancesToEnemies[i] = __searchPath(game, EnemiesCoordinates[i], PlayerCoordinates);
         }
     }
 
     private static int __searchPath(Game game, (short, short) start, (short, short) finish)
     {
-        FieldModel PathToEndField = new FieldModel(game.Field);
-        PathToEndField.SetEntryPoints(start, finish);
-        return game.PathSearchAlgo.FindPathLength(PathToEndField);
+        FieldModel pathToEndField = new FieldModel(game.Field);
+        pathToEndField.SetEntryPoints(start, finish);
+        return game.PathSearchAlgo.FindPathLength(pathToEndField);
     }
 
-    public int Value()
+    public readonly int Value()
     {
         int value = 1;
         foreach (int distance in DistancesToEnemies)

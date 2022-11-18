@@ -1,4 +1,7 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+using Lab3.Model.EnumsAndModels;
+
+namespace Lab3.Model.Helpers;
 
 public static class FieldFactory
 {

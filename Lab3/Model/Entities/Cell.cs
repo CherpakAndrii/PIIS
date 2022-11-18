@@ -1,4 +1,4 @@
-﻿namespace Lab3.Model;
+﻿namespace Lab3.Model.Entities;
 
 public class Cell
 {
@@ -8,7 +8,7 @@ public class Cell
     public bool IsPassed { get; private set; }
 
     private (short, short) _previousCellYxCoordinates;
-    public (short, short) PreviousCellYXCoordinates
+    public (short, short) PreviousCellYxCoordinates
     {
         get => _previousCellYxCoordinates;
         set

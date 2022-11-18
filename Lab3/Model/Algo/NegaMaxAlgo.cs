@@ -1,4 +1,6 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+
+namespace Lab3.Model.Algo;
 
 public class NegaMaxAlgo : DecisionTree
 {
@@ -12,12 +14,12 @@ public class NegaMaxAlgo : DecisionTree
     {
         if (depth == 0 || node.IsTerminal)
         {
-            node.Value = (int)node.CurrentState.Value() * color;
+            node.Value = node.CurrentState.Value() * color;
         }
         else
         {
             node.Value = Int32.MinValue / 2;
-            foreach (Node child in node.PossibleNextMoves)
+            foreach (Node child in node.PossibleNextMoves!)
             {
                 int newValue = -NegaMax(child, depth - 1, -color);
                 if (newValue > node.Value) node.Value = newValue;

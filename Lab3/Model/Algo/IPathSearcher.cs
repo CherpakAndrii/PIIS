@@ -1,4 +1,7 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+using Lab3.Model.EnumsAndModels;
+
+namespace Lab3.Model.Algo;
 
 public abstract class PathSearcher
 {
@@ -36,7 +39,7 @@ public abstract class PathSearcher
         {
             current = Field[previousY, previousX];
             reversedRoute.Push(current);
-            (previousY, previousX) = current.PreviousCellYXCoordinates;
+            (previousY, previousX) = current.PreviousCellYxCoordinates;
         } while ((previousY, previousX) != (-1, -1));
     
         (short, short)[] route = new (short, short)[reversedRoute.Count];

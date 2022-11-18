@@ -1,4 +1,5 @@
-﻿using Lab3.Model;
+﻿using Lab3.Model.EnumsAndModels;
+//using Lab3.Model.Helpers;
 using Lab3.View;
 
 namespace Lab3.Controller;
@@ -17,7 +18,7 @@ public static class UserInput
         start = (7, 11);//GetEntryPoint(field, true);
         finish = (1, 13);//GetEntryPoint(field, false);
     }
-    private static ValidatedFileModel GetFileName()
+    /*private static ValidatedFileModel GetFileName()
     {
         while (true)
         {
@@ -29,7 +30,7 @@ public static class UserInput
             if (validationResult == 0)
             {
                 Console.Clear();
-                return new(filename);
+                return new(filename!);
             }
             MessageOutput.InputErrorMessageOutput(validationResult);
         }
@@ -74,7 +75,7 @@ public static class UserInput
                     break;
             }
         }
-    }
+    }*/
 
     private static Method GetMethod()
     {
@@ -102,7 +103,7 @@ public static class UserInput
         }
     }
     
-    private static AdjacencyType GetAdjacencyType()
+    /*private static AdjacencyType GetAdjacencyType()
     {
         Console.WriteLine("Would you like to allow the adjacency on the corners, or only on the edge?");
         bool firstIsChosen = true;
@@ -166,5 +167,5 @@ public static class UserInput
                 return (y, x);
             }
         }
-    }
+    }*/
 }

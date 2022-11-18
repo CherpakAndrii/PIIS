@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Lab3.Model;
+namespace Lab3.Model.Helpers;
 
 public static class FileValidator
 {
@@ -14,12 +14,12 @@ public static class FileValidator
             sr.Close();
             return 3;
         }
-        short lineSize = (short) sr.ReadLine().Length;
+        short lineSize = (short) sr.ReadLine()!.Length;
         sr.Close();
         sr = new StreamReader(filename);
         while (sr.Peek()!=-1)
         {
-            string line = sr.ReadLine();
+            string line = sr.ReadLine()!;
             if (!Regex.IsMatch(line, $"^[0-1]{{{lineSize}}}$")) return 4;
         }
         sr.Close();

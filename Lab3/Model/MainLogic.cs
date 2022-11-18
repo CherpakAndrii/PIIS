@@ -1,4 +1,5 @@
-﻿using Lab3.View;
+﻿using Lab3.Model.EnumsAndModels;
+using Lab3.View;
 
 namespace Lab3.Model;
 
@@ -12,7 +13,7 @@ public static class MainLogic
         {
             if (gm.GetNextMoveCoordinates(out short i, out short j, moveCtr))
             {
-                MakeMove(i, j, gm, ref moveCtr);
+                MakeMove(i, j, gm);
                 moveCtr++;
                 Console.Clear();
                 ResultOutput.OutputResult(gm.Field, gm.DecisionTree.Root.CurrentState);
@@ -27,7 +28,7 @@ public static class MainLogic
         }
     }
     
-    private static void MakeMove(short i, short j, Game gm, ref int moveCtr)
+    private static void MakeMove(short i, short j, Game gm)
     {
         gm.DecisionTree.MoveIsDone(i, j);
     }

@@ -1,4 +1,6 @@
-﻿namespace Lab3.Model;
+﻿using Lab3.Model.Entities;
+
+namespace Lab3.Model.EnumsAndModels;
 
 public class FieldModel
 {

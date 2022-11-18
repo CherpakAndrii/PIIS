@@ -1,4 +1,4 @@
-﻿namespace Lab3.Model;
+﻿namespace Lab3.Model.EnumsAndModels;
 
 public class RouteModel
 {

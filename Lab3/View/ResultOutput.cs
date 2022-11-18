@@ -1,8 +1,9 @@
-﻿using Lab3.Model;
+﻿using Lab3.Model.Entities;
+using Lab3.Model.EnumsAndModels;
 
 namespace Lab3.View;
 
-public class ResultOutput
+public static class ResultOutput
 { 
     public static void OutputResult(FieldModel field, Position position)
     {
@@ -42,7 +43,7 @@ public class ResultOutput
 
         Logger logger = new();
         logger.Log("Distance to finish: "+position.DistanceToFinish+"\n");
-        logger.Log("Position value: "+(int)position.Value()+"\n");
+        logger.Log("Position value: "+position.Value()+"\n");
         for (int i = 0; i < visualizedField.GetLength(0); i++)
         {
             for (int j = 0; j < visualizedField.GetLength(1); j++)
