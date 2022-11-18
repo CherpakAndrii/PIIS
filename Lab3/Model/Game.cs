@@ -73,5 +73,12 @@ public class Game
         (i, j) = route.Route[1];
         return true;
     }
+    
+    public int SearchPathLength((short, short) start, (short, short) finish)
+    {
+        FieldModel pathToEndField = new FieldModel(Field);
+        pathToEndField.SetEntryPoints(start, finish);
+        return PathSearchAlgo.FindPathLength(pathToEndField);
+    }
 }
 

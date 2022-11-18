@@ -3,9 +3,9 @@ using Lab3.Model.EnumsAndModels;
 
 namespace Lab3.Model.Helpers;
 
-public static class FieldFactory
+public class FieldFactory
 {
-    public static FieldModel GetField(ValidatedFileModel file)
+    public FieldModel GetField(ValidatedFileModel file)
     {
         string[] lines;
         using (StreamReader sr = new StreamReader(file.FileName))

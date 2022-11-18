@@ -2,9 +2,9 @@
 
 namespace Lab3.Model.Helpers;
 
-public static class FileValidator
+public class FileValidator
 {
-    public static byte ValidateFile(string? filename)
+    public byte ValidateFile(string? filename)
     {
         if (string.IsNullOrEmpty(filename)) return 1;
         if (!File.Exists(filename)) return 2;

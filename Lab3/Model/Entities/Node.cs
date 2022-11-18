@@ -14,7 +14,7 @@ partial class DecisionTree
         public List<Node>? PossibleNextMoves;
         private readonly Game _game;
 
-        public Node(Position previousState, short i, short j, int depthLvl, Game gm)
+        public Node(Position previousState, short i, short j, int depthLvl, Game gm, int currentDepthLimit)
         {
             DepthLevel = depthLvl;
             bool playerMove = DepthLevel % 2 == 0;
@@ -30,23 +30,23 @@ partial class DecisionTree
                 Value = CurrentState.Value();
             }
 
-            InitializeNewNodes();
+            InitializeNewNodes(currentDepthLimit);
         }
 
-        public void InitializeNewNodes()
+        public void InitializeNewNodes(int limit)
         {
             if (IsTerminal) return;
-            if (DepthLevel <= _depthLvlCtr)
+            if (DepthLevel <= limit)
             {
                 if (PossibleNextMoves != null)
                     foreach (Node n in PossibleNextMoves)
-                        n.InitializeNewNodes();
-                else PossibleNextMoves = GetPossibleMoves();
+                        n.InitializeNewNodes(limit);
+                else PossibleNextMoves = GetPossibleMoves(limit);
             }
             else Value = CurrentState.Value();
         }
 
-        private List<Node> GetPossibleMoves()
+        private List<Node> GetPossibleMoves(int depthLimit)
         {
             (short i, short j) = DepthLevel % 2 == 0 ? (CurrentState.PlayerCoordinates) : CurrentState.EnemiesCoordinates[0];
             Cell currentCell = _game.Field[i, j];
@@ -54,7 +54,7 @@ partial class DecisionTree
             Cell[] adjacent = GetAdjacentCells(currentCell);
             foreach (Cell cell in adjacent)
             {
-                moves.Add(new Node(CurrentState, cell.Y, cell.X, DepthLevel+1, _game));
+                moves.Add(new Node(CurrentState, cell.Y, cell.X, DepthLevel+1, _game, depthLimit));
             }
             return moves;
         }

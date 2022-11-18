@@ -3,14 +3,14 @@
 public abstract partial class DecisionTree
 {
     public Node Root;
-    private static int _depthLvlCtr;
+    private int _depthLimitCtr;
 
     protected DecisionTree(Position startState, short firstI, short firstJ, int currentMaxDepth, Game gm)
     {
         if (startState.DistancesToEnemies.Length > 1)
             throw new NotImplementedException("This application can't work with more than 1 enemy for now :(");
-        _depthLvlCtr = currentMaxDepth;
-        Root = new Node(startState, firstI, firstJ, 0, gm);
+        _depthLimitCtr = currentMaxDepth;
+        Root = new Node(startState, firstI, firstJ, 0, gm, _depthLimitCtr);
     }
 
     protected abstract int GetNextMoveNodeValue(Node node, int depth);
@@ -35,17 +35,15 @@ public abstract partial class DecisionTree
         return found;
     }
 
-    public void MoveIsDone(int i, int j)
+    public void MakeMove(int i, int j, bool initializingNeeded)
     {
         foreach (Node n in Root.PossibleNextMoves!)
         {
             if (n.I == i && n.J == j)
             {
                 Root = n;
-                //game.CurrentPosition = Root.CurrentState;
-                _depthLvlCtr++;
-                Root.InitializeNewNodes();
-                GC.Collect();
+                _depthLimitCtr++;
+                if (initializingNeeded) Root.InitializeNewNodes(_depthLimitCtr);
                 return;
             }
         }

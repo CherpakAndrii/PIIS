@@ -1,6 +1,4 @@
-﻿using Lab3.Model.EnumsAndModels;
-
-namespace Lab3.Model.Entities;
+﻿namespace Lab3.Model.Entities;
 
 public struct Position
 { 
@@ -14,20 +12,13 @@ public struct Position
     {
         PlayerCoordinates = playerPosition;
         EnemiesCoordinates = enemiesCoordinates;
-        DistanceToFinish = __searchPath(game, PlayerCoordinates, game.Finish);
+        DistanceToFinish = game.SearchPathLength(PlayerCoordinates, game.Finish);
         if (DistanceToFinish == -1) throw new ApplicationException("There is no path to target!");
         DistancesToEnemies = new int[enemiesCoordinates.Length];
         for (int i = 0; i < EnemiesCoordinates.Length; i++)
         {
-            DistancesToEnemies[i] = __searchPath(game, EnemiesCoordinates[i], PlayerCoordinates);
+            DistancesToEnemies[i] = game.SearchPathLength(EnemiesCoordinates[i], PlayerCoordinates);
         }
-    }
-
-    private static int __searchPath(Game game, (short, short) start, (short, short) finish)
-    {
-        FieldModel pathToEndField = new FieldModel(game.Field);
-        pathToEndField.SetEntryPoints(start, finish);
-        return game.PathSearchAlgo.FindPathLength(pathToEndField);
     }
 
     public readonly int Value()

@@ -9,14 +9,15 @@ public static class Program
 {
     public static void Main()
     {
-        UserInput.GetInputs(out ValidatedFileModel filename, out Method method, out AdjacencyType adjacency);
-        FieldModel field = FieldFactory.GetField(filename);
-        UserInput.GetEntries(out (short, short) startPoint, out (short, short) endPoint, field);
+        UserInput input = new();
+        input.GetInputs(out ValidatedFileModel filename, out Method method, out AdjacencyType adjacency);
+        FieldModel field = new FieldFactory().GetField(filename);
+        input.GetEntries(out (short, short) startPoint, out (short, short) endPoint, field);
         field.SetEntryPoints(startPoint, endPoint);
         Game game = new Game(field, startPoint, endPoint, adjacency, method);
         Logger.ClearOldLogs();
-        MainLogic.Play(game);
-        GameResult result = MainLogic.GetGameResult(game);
+        MainLogic logic = new MainLogic(game);
+        GameResult result = logic.Play();
         Console.WriteLine(result == GameResult.PlayerWins?"Done!":"Failed");
         Console.ReadKey();
     }

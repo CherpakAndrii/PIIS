@@ -3,9 +3,9 @@ using Lab3.Model.EnumsAndModels;
 
 namespace Lab3.View;
 
-public static class ResultOutput
+public class ResultOutput
 { 
-    public static void OutputResult(FieldModel field, Position position)
+    public void OutputResult(FieldModel field, Position position)
     {
         char[,] visualizedField = new char[field.Height + 2, field.Width + 2];
         
