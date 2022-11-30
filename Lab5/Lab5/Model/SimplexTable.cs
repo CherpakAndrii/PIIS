@@ -37,8 +37,6 @@ public partial class SimplexTable
                 SimplexMatrix[largestInd][0] / SimplexMatrix[largestInd][columnIndex]) largestInd = i;
         }
 
-        int.TryParse("", out int _);
-
         return largestInd;
     }
 
